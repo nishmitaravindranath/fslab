@@ -1,10 +1,3 @@
-//============================================================================
-// Name        : pgm2.cpp
-// Author      : 
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
 
 #include <iostream>
 #include<fstream>
@@ -17,14 +10,14 @@ class Student
 	string branch;
 public:
 	void read();
-	void pack(string filename);
+	void pack(string fname);
 	void unpack();
-	void modify();
+	void search(string key,string fname);
 };
 int main() {
 	int choice;
 	Student s;
-	string fname;
+	string fname,key;
 	while(1)
 	{
 		cout<<"1.Enter data 2.Search 3.Modify"<<endl;
@@ -39,10 +32,12 @@ int main() {
 			s.pack(fname);
 			break;
 		case 2:
-		//s.pack();
+		cout<<"enter the usn to be searched\n";
+		cin>>key;
+		s.search(key,fname);
 			break;
 		case 3:
-		//s.unpack();
+		s.unpack(fname);
 			break;
 		case 4:
 			//s.modify();
@@ -62,11 +57,38 @@ void Student::read()
 	cin>>branch;
 
 }
-void Student::pack(string filename)
+void Student::pack(string fname)
 {
 	string buffer;
-	ofstream myf(filename.c_str(),ios::app);
+	ofstream myf(fname.c_str(),ios::app);
 	buffer=usn+"|"+name+"|"+sem+"|"+branch;
 	myf<<buffer;
 	myf.close();
+}
+void Student::unpack(string fname)
+{
+	ifstream myf(fname.c_str());
+	getline(myf,usn,'|');
+	getline(myf,name,'|');
+	getline(myf,branch,'|');
+	getline(myf,sem,'|');
+	myf.close();
+}
+void Student::search(string key,string fname)
+{
+	Student s[10];
+	int i=0;
+	ifstream myf(fname.c_str());
+	while(!myf.eof())
+	{
+		cout<<"In search";
+		s[i].unpack(fname);
+	if(key==s[i].usn)
+	{
+		cout<<"record found\n";
+		cout<<s[i].usn<<"\t"<<s[i].name;
+	    break;
+	}
+	i++;
+}
 }
