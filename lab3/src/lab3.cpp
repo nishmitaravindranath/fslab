@@ -1,15 +1,89 @@
-//============================================================================
-// Name        : lab3.cpp
-// Author      : 
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
-
 #include <iostream>
+#include <fstream>
+#include <string>
+#include<stdlib.h>
 using namespace std;
 
-int main() {
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
-	return 0;
+class Student {
+    string usn;
+    string  name;
+    string branch;
+    string sem;
+public:
+    void read();
+    void pack(string filename);
+    int search(string,string);
+    void unpack(string);
+    int modify(string key,string);
+    };
+int main()
+{
+    int ch;
+    //fstream f;
+
+    Student s;
+    string key;
+   string filename;
+    while(1)
+    {
+    cout<<"1.insert 2.search 3.delete 4.modify\n";
+    cout<<"enter your choice";
+    cin>>ch;
+
+         switch(ch)
+        {
+        case 1:
+            s.read();
+            cout<<"enter filename ";
+            cin >>filename;
+            s.pack(filename.c_str());
+            break;
+        case 2:
+            cout<<"Enter the USN to be searched\n";
+            cin>>key;
+            cout<<"enter filename ";
+                        cin >> filename;
+            s.search(key,filename);
+            break;
+        case 3:
+            s.modify(key,filename);
+            break;
+        case 4: s.unpack(string filename);
+            break;
+
+            }
+        }
+}
+void Student::read(){
+    cout<<"enter name"<<endl;
+    cin>>name;
+    cout<<"enter usn"<<endl;
+    cin>>usn;
+    cout<<"enter branch"<<endl;
+    cin>>branch;
+    cout<<"enter sem"<<endl;
+    cin>>sem;
+}
+void Student::pack(string filename)
+{
+    string buffer;
+    fstream fp;
+    fp.open(filename.c_str(),ios::out);
+    buffer= usn+"|"+name+"|"+sem+"|"+branch;
+    buffer.resize(100,'$');
+    fp<<buffer<<endl;
+    fp.close();
+
+}
+void Student::unpack(string filename)
+{
+	string temp;
+    ifstream myf(filename.c_str());
+    getline(myf,usn,'|');
+    getline(myf,name,'|');
+    getline(myf,branch,'|');
+    getline(myf,sem,'$');
+    getline(myf,temp);
+    myf.close();
+
 }
