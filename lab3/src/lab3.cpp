@@ -64,15 +64,11 @@ void Student::read(){
     cout<<"enter sem"<<endl;
     cin>>sem;
 }
-void Student::pack(string filename)
+void Student::pack()
 {
-    string buffer;
-    fstream fp;
-    fp.open(filename.c_str(),ios::out);
-    buffer= usn+"|"+name+"|"+sem+"|"+branch;
-    buffer.resize(100,'$');
-    fp<<buffer<<endl;
-    fp.close();
+    stringstream ss;
+    ss << sem;
+    return name + "|" + usn + "|" + ss.str () + "|" + branch;
 
 }
 void Student::unpack(string filename)
