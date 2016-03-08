@@ -73,13 +73,13 @@ void Student::pack()
 }
 void Student::unpack(string filename)
 {
-	string temp;
+    stringstream ss;
+    ss << in;
     ifstream myf(filename.c_str());
-    getline(myf,usn,'|');
-    getline(myf,name,'|');
-    getline(myf,branch,'|');
-    getline(myf,sem,'$');
-    getline(myf,temp);
-    myf.close();
+    getline(ss,usn,'|');
+    getline(ss,name,'|');
+    getline(ss,sem,'|');
+    getline(ss,branch,"\n");
+    return Student (name, usn, atoi (sem.c_str ()), branch);
 
 }
